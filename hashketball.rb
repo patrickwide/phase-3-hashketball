@@ -1,3 +1,5 @@
+require "pry"
+
 # Write your code below game_hash
 def game_hash
   {
@@ -182,3 +184,75 @@ def big_shoe_rebounds
 
   rebounds
 end
+
+# Bonus
+
+def most_points_scored
+  max_points = 0
+  player_with_max_points = nil
+
+  game_hash.each do |_team, team_data|
+    team_data[:players].each do |player|
+      if player[:points] > max_points
+        max_points = player[:points]
+        player_with_max_points = player[:player_name]
+      end
+    end
+  end
+
+  player_with_max_points
+end
+
+def winning_team
+  home_team_points = 0
+  away_team_points = 0
+
+  game_hash[:home][:players].each do |player|
+    home_team_points += player[:points]
+  end
+
+  game_hash[:away][:players].each do |player|
+    away_team_points += player[:points]
+  end
+
+  if home_team_points > away_team_points
+    game_hash[:home][:team_name]
+  else
+    game_hash[:away][:team_name]
+  end
+end
+
+def player_with_longest_name
+  longest_name = ""
+  longest_name_player = nil
+
+  game_hash.each do |_team, team_data|
+    team_data[:players].each do |player|
+      if player[:player_name].length > longest_name.length
+        longest_name = player[:player_name]
+        longest_name_player = player[:player_name]
+      end
+    end
+  end
+
+  longest_name_player
+end
+
+def long_name_steals_a_ton?
+  player_with_most_steals = nil
+  most_steals = 0
+
+  game_hash.each do |_team, team_data|
+    team_data[:players].each do |player|
+      if player[:steals] > most_steals
+        most_steals = player[:steals]
+        player_with_most_steals = player[:player_name]
+      end
+    end
+  end
+
+  player_with_longest_name == player_with_most_steals
+end
+
+
+# binding.pry
